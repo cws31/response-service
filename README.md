@@ -1,6 +1,6 @@
 # Emergency Response Service
 
-A microservice-based backend component for emergency management systems, built with **Spring Boot**. The **Response Service** manages emergency response teams, tracking their status, type, and dispatch workflows to ensure fast, reliable coordination during critical situations.
+A microservice-based backend component for emergency management systems, built with **Spring Boot** and **Spring Cloud**. The **Response Service** manages emergency response teams, tracks their status, and communicates with external microservices (such as the Incident Service) via **OpenFeign** to ensure fast, reliable coordination during critical situations.
 
 ---
 
@@ -8,6 +8,7 @@ A microservice-based backend component for emergency management systems, built w
 
 * **Team Management**: Register, update, and monitor emergency response teams.
 * **Status & Type Tracking**: Categorize teams by type and monitor operational status (e.g., available, dispatched).
+* **Inter-Service Communication**: Seamlessly fetches and synchronizes incident information using Spring Cloud OpenFeign.
 * **Dispatch Operations**: Handle team dispatch requests and status transitions seamlessly.
 * **Robust Exception Handling**: Centralized global error handling ensuring clear, standard error response formats.
 
@@ -15,21 +16,24 @@ A microservice-based backend component for emergency management systems, built w
 
 ## Tech Stack
 
-* **Language**: Java
-* **Framework**: Spring Boot
+* **Language**: Java 21
+* **Framework**: Spring Boot & Spring Cloud (OpenFeign)
 * **Build Tool**: Maven (`mvnw`)
 * **Database / Persistence**: Spring Data JPA
 
 ---
 
-##  Project Structure
+## Project Structure
 
 ```text
 response-service/
 ├── src/
 │   ├── main/java/com/emergency/response_service/
-│   │   ├── controller/     # REST Controllers (ResponseTeamController)
-│   │   ├── dto/            # Data Transfer Objects (Requests/Responses)
+│   │   ├── client/         # OpenFeign client interfaces & client DTOs
+│   │   │   ├── dto/        # Incident DTOs & Enums (IncidentResponse, Category, Severity, Status)
+│   │   │   └── IncidentClient.java
+│   │   ├── controller/     # REST Controllers (ResponseTeamController, IncidentCommunicationController)
+│   │   ├── dto/            # Local Data Transfer Objects
 │   │   ├── entity/         # JPA Entities (ResponseTeam)
 │   │   ├── enums/          # Status and Type Enumerations
 │   │   ├── exception/      # Global exception handlers & custom errors
