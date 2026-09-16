@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.emergency.response_service.client.dto.IncidentResponse;
 
-@FeignClient(name = "incident-service", url = "${incident-service.url}")
+@FeignClient(name = "incident-service")
 public interface IncidentClient {
 
     @GetMapping("/api/incidents/{id}")
